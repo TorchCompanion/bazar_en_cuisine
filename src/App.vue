@@ -1,6 +1,7 @@
 <template>
-    <div class="container">
+    <div class="container main-container">
         <!-- top menu -->
+        <top-menu></top-menu>
         <!-- near future ==> routerView -->
         <div class="container-fluid">
             <h1>Recipes 🍪</h1>
@@ -10,11 +11,14 @@
         </div>
         <!-- / routerView -->
         <!-- app-bar -->
+        <!-- TODO CREATE BOTTOM BAR
+        TODO : @see ./src/components/UI/bottom-bar.vue -->
     </div>
 </template>
 
 <script>
     import RecipesListing from "@/components/UI/recipes/recipes-listing";
+    import TopMenu from "@/components/UI/top-menu";
 
 
     const user_ = {
@@ -56,6 +60,7 @@
     export default {
         name: 'App',
         components: {
+            TopMenu,
             RecipesListing,
         },
         data() {
