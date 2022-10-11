@@ -17,6 +17,7 @@
                     <span class="d-block mt-2 sr-only">Chargement en cours...</span>
                 </div>
             </div>
+            <!-- TODO create a button "load more" -->
         </div>
     </div>
 </template>
@@ -42,19 +43,21 @@
         computed: {},
         created() {
             this.loading = true;
+
             this.yumliService.getRecipesList(
                 'list.recipe.popular',
                 this.page,
                 this.limit
-            ).then(response => {
-                if (response.data.feed === undefined
-                    || response.data.feed === null) {
-                    throw new Error("Aucune recette trouvée");
-                }
+            )
+                .then(response => {
+                    if (response.data.feed === undefined
+                        || response.data.feed === null) {
+                        throw new Error("Aucune recette trouvée");
+                    }
 
-                this.recipesList = response.data.feed;
-                this.loading = false;
-            })
+                    this.recipesList = response.data.feed;
+                    this.loading = false;
+                })
                 .catch(error => {
                     console.log(error);
                     this.loading = false;

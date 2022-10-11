@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const apiKey = 'YOUR_API_KEY';
-const apiHost = 'YOUR_API_HOST';
+const apiKey = '79bbe2e390msh49581993f317bc2p1b8a75jsn4419236ad333';
+const apiHost = 'yummly2.p.rapidapi.com';
 
 const http = axios.create({
-    baseURL: 'https://yummly2.p.rapidapi.com/',
+    baseURL: 'https://' + apiHost + '/',
     headers: {
         "Content-type": "application/json",
         'X-RapidAPI-Key': apiKey,
@@ -25,7 +25,12 @@ export default {
         });
     },
 
-    searchRecipes: (searchTerm) => {
+    // TODO create a clean search method
+    // @see https://rapidapi.com/apidojo/api/yummly2/
+    /*
+    searchRecipes: (searchTerm,  page = 0, limit = 10) => {
         return http.get(`?q=${searchTerm}`);
-    }
+    }//*/
+
+    // TODO create a clean method to get categories
 }
