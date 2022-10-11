@@ -1,28 +1,21 @@
 <template>
-    <img alt="Vue logo" src="./assets/logo.png">
-
-    <div v-if="userData !== undefined" class="w-100">
-        <h3>Formulaire contact</h3>
-        <form action="">
-            <input v-model="userData.name" type="text">
-        </form>
+    <div class="container">
+        <!-- top menu -->
+        <!-- near future ==> routerView -->
+        <div class="container-fluid">
+            <h1>Recipes 🍪</h1>
+            <!-- listing de recipes -->
+            <recipes-listing></recipes-listing>
+            <!-- / listing de recipes -->
+        </div>
+        <!-- / routerView -->
+        <!-- app-bar -->
     </div>
-
-    <div class="sepatron x"></div>
-
-    <div class="w-100 listing-recipes">
-        <recipe v-for="recipe in recipesList"
-                :key="recipe.id"
-                :recipe="recipe"></recipe>
-    </div>
-
-    <HelloWorld :user="userData"
-                msg="Macaque 1"/>
 </template>
 
 <script>
-    import HelloWorld from './components/HelloWorld.vue';
-    import Recipe from './components/UI/recipes/recipe.vue';
+    import RecipesListing from "@/components/UI/recipes/recipes-listing";
+
 
     const user_ = {
         name: 'John',
@@ -63,8 +56,7 @@
     export default {
         name: 'App',
         components: {
-            HelloWorld,
-            Recipe,
+            RecipesListing,
         },
         data() {
             return {
@@ -83,16 +75,5 @@
 </script>
 
 <style>
-    div.sepatron {
-        margin: 20px 0;
-    }
 
-    #app {
-        font-family: Avenir, Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-        margin-top: 60px;
-    }
 </style>

@@ -1,17 +1,20 @@
 <template>
     <div class="recipe">
-        <div v-if="recipe !== undefined" class="w-100">
-            <div class="w-100">
-                <img alt="recipe illustration"
-                     src="https://via.placeholder.com/350x150">
+        <div v-if="recipe !== undefined" class="w-100 position-relative">
+            <div class="w-100 position-relative">
+                <div class="img_wrapper">
+                    <img :src="getCoverImage(recipe)"
+                         alt="recipe illustration"
+                         class="cover">
+                </div>
             </div>
-            <div class="row">
+            <div class="row details d-flex align-content-center">
                 <div class="col-6">
-                    <h3>{{ recipe.title }}</h3>
-                    <div class="review">⭐ {{ recipe.review }}</div>
+                    <h5>{{ recipe.content.details.name }}</h5>
+                    <div class="review">⭐ {{ recipe.content.details.rating }}</div>
                 </div>
                 <div class="col-6">
-                    <p class="text-muted">by {{ recipe.creator }}</p>
+                    <p class="text-muted">by {{ recipe.display.source.sourceDisplayName }}</p>
                 </div>
             </div>
         </div>
@@ -40,7 +43,15 @@
         mounted() {
 
         },
-        methods: {},
+        methods: {
+            getCoverImage(recipe) {
+                let img = recipe.content?.details?.images[0]?.resizableImageUrl;
+                if (img === undefined || img === null) {
+                    return 'https://via.placeholder.com/350x150';
+                }
+                return img;
+            },
+        },
         components: {},
         beforeUnmount() {
         }
