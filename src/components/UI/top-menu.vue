@@ -1,7 +1,7 @@
 <template>
     <nav class="nav navbar fixed-top bg-light">
         <div class="container-fluid d-flex justify-content-end align-content-end">
-            <a class="nav-link" href="#">🔎</a>
+            <a class="nav-link" href="#" @click.prevent="startSearch">🔎</a>
             <a class="nav-link disabled">➕</a>
         </div>
     </nav>
@@ -24,7 +24,14 @@
         mounted() {
 
         },
-        methods: {},
+        methods: {
+            startSearch() {
+                this.$emit('start-search', {
+                    event: 'start-search',
+                    search: true,
+                });
+            }
+        },
         components: {},
         beforeUnmount() {
         }

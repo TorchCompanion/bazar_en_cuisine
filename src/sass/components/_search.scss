@@ -1,0 +1,19 @@
+.search-container {
+  background-color: $background;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1035;
+  transition: all 220ms ease-in-out;
+
+  &:not(.open) {
+    transform: translateX(100%);
+  }
+
+  .search-listing {
+    max-width: 500px;
+  }
+}

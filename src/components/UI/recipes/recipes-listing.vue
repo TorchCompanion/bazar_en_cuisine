@@ -1,7 +1,7 @@
 <template>
     <div class="listing__container">
         <div class="listing-wrapper">
-            <div v-if="recipesList !== undefined && loading === false"
+            <div v-if="recipesList !== undefined"
                  class="w-100 listing-recipes d-flex flex-column
         justify-content-center align-items-center">
                 <recipe v-for="recipe in recipesList"
@@ -9,7 +9,7 @@
                         :recipe="recipe"
                         @click="goToRecipe(recipe)"></recipe>
             </div>
-            <div v-else class="w-100">
+            <div v-if="loading" class="w-100 mt-4">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <div class="spinner-border text-primary" role="status">
                         🍔
@@ -17,7 +17,17 @@
                     <span class="d-block mt-2 sr-only">Chargement en cours...</span>
                 </div>
             </div>
-            <!-- TODO create a button "load more" -->
+
+            <div v-if="!loading"
+                 class="w-100 d-flex justify-content-center mt-4 mb-4">
+                <!-- create a button "load more" -->
+                <button :disabled="loading"
+                        class="btn btn-primary"
+                        @click="loadMoreRecipes">
+                    Charger plus de recettes 🍔
+                </button>
+            </div>
+
         </div>
     </div>
 </template>
@@ -42,27 +52,7 @@
         watch: {},
         computed: {},
         created() {
-            this.loading = true;
-
-            this.yumliService.getRecipesList(
-                'list.recipe.popular',
-                this.page,
-                this.limit
-            )
-                .then(response => {
-                    if (response.data.feed === undefined
-                        || response.data.feed === null) {
-                        throw new Error("Aucune recette trouvée");
-                    }
-
-                    this.recipesList = response.data.feed;
-                    this.loading = false;
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.loading = false;
-                })
-            ;
+            this.loadRecipes();
         },
         mounted() {
 
@@ -70,6 +60,42 @@
         methods: {
             goToRecipe(recipe) {
                 console.log('goToRecipe', recipe);
+            },
+            loadMoreRecipes() {
+                this.page += 1;
+                this.loadRecipes();
+            },
+            loadRecipes() {
+                this.loading = true;
+                this.yumliService.getRecipesList(
+                    'list.recipe.popular',
+                    this.page,
+                    this.limit
+                )
+                    .then(response => {
+                        if (response.data.feed === undefined
+                            || response.data.feed === null) {
+                            throw new Error("Aucune recette trouvée");
+                        }
+
+                        if (this.recipesList === undefined) {
+                            this.recipesList = response.data.feed;
+                        } else {
+                            // [ATTENTION] => do not check for duplicate
+                            this.recipesList.push(
+                                ...response.data.feed
+                            );
+                        }
+                        this.loading = false;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        if (this.page >= 1) {
+                            this.page -= 1;
+                        }
+                        this.loading = false;
+                    })
+                ;
             }
         },
         components: {
