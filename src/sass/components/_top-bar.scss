@@ -1,0 +1,9 @@
+.top-bar {
+  position: fixed;
+  height: 65px;
+  background-color: $background;
+
+  a.btn {
+    min-width: 80px;
+  }
+}

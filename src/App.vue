@@ -3,6 +3,11 @@
         <!-- top menu -->
         <top-menu @startSearch="search"></top-menu>
 
+        <a class="nav-item" href="">
+            <span class="icon"></span>
+            <span class="label"></span>
+        </a>
+
         <!-- search module -->
         <div :class="['search-container',
         {'open': searchMode}]">
@@ -25,11 +30,22 @@
             </div>
         </div>
 
+        <!-- display recipes -->
+        <div :class="['recipe-overlay-container',
+        {'open': recipeMode}]">
+            <div v-if="recipeDetail !== undefined"
+                 class="w-100">
+                <recipe-overlay :recipe="recipeDetail"
+                                @close-recipe="closeRecipe"></recipe-overlay>
+            </div>
+        </div>
+
+
         <!-- near future ==> routerView -->
         <div class="container-fluid">
             <h1>Recipes 🍪</h1>
             <!-- listing de recipes -->
-            <recipes-listing></recipes-listing>
+            <recipes-listing @recipe-click="showRecipe"></recipes-listing>
             <!-- / listing de recipes -->
         </div>
 
@@ -37,6 +53,7 @@
         <!-- app-bar -->
         <!-- TODO CREATE BOTTOM BAR
         TODO : @see ./src/components/UI/bottom-bar.vue -->
+        <bottom-bar></bottom-bar>
     </div>
 </template>
 
@@ -44,6 +61,8 @@
     import RecipesListing from "@/components/UI/recipes/recipes-listing";
     import TopMenu from "@/components/UI/top-menu";
     import SearchListing from "@/components/UI/recipes/search-listing";
+    import BottomBar from "@/components/UI/bottom-bar";
+    import RecipeOverlay from "@/components/UI/recipes/recipe-overlay";
 
 
     const user_ = {
@@ -58,14 +77,20 @@
     export default {
         name: 'App',
         components: {
+            RecipeOverlay,
             SearchListing,
             TopMenu,
             RecipesListing,
+            BottomBar,
         },
         data() {
             return {
                 d: null,
                 userData: undefined,
+                // state recipe
+                recipeMode: false,
+                recipeDetail: undefined,
+                // state search
                 searchMode: false,
                 searchQuery: '',
                 query: '',
@@ -74,7 +99,7 @@
             }
         },
         watch: {
-            searchMode: function (newVal) {
+            hasModal: function (newVal) {
                 if (newVal) {
                     // si on est en searchMode == true
                     this.body_.classList.add('no-scroll');
@@ -83,6 +108,11 @@
                 }
             }
         },
+        computed: {
+            hasModal() {
+                return this.recipeMode || this.searchMode;
+            },
+        },
         mounted() {
             this.body_ = document.querySelector('body');
             setTimeout(() => {
@@ -90,6 +120,21 @@
             }, 2000);
         },
         methods: {
+            closeRecipe() {
+                this.recipeMode = false;
+                setTimeout(() => {
+                    this.recipeDetail = undefined;
+                }, 230);
+            },
+            showRecipe(recipe) {
+                if (recipe !== undefined) {
+                    this.recipeDetail = recipe;
+                    this.recipeMode = true;
+                } else {
+                    this.recipeDetail = undefined;
+                    this.recipeMode = false;
+                }
+            },
             search(e) {
                 console.log('search', e);
                 this.toggleSearch();

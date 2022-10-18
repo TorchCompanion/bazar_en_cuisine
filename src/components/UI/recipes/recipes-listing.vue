@@ -60,6 +60,7 @@
         methods: {
             goToRecipe(recipe) {
                 console.log('goToRecipe', recipe);
+                this.$emit('recipe-click', recipe);
             },
             loadMoreRecipes() {
                 this.page += 1;

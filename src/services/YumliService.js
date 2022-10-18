@@ -25,9 +25,8 @@ export default {
         });
     },
 
-    // TODO create a clean search method
+    // create a clean search method
     // @see https://rapidapi.com/apidojo/api/yummly2/
-    //*
     searchRecipes: (
         searchTerm,
         tag = undefined,
@@ -44,7 +43,7 @@ export default {
                 maxTotalTimeInSeconds: '5000',
             }
         });
-    }//*/
+    }
 
     // TODO create a clean method to get categories
 }

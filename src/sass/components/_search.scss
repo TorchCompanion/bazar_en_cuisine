@@ -1,5 +1,7 @@
 .search-container {
   background-color: $background;
+  margin-bottom: 65px;
+  padding-bottom: 65px;
   overflow: auto;
   position: fixed;
   top: 0;
@@ -15,5 +17,6 @@
 
   .search-listing {
     max-width: 500px;
+    margin: 0 auto;
   }
 }

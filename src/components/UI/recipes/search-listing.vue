@@ -10,6 +10,22 @@
                     :recipe="recipe"
                     @click="goToRecipe(recipe)"></recipe>
         </div>
+        <div v-if="loading" class="w-100 mt-4">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                    🍔
+                </div>
+                <span class="d-block mt-2 sr-only">Chargement en cours...</span>
+            </div>
+        </div>
+        <div v-if="!loading && query !== ''"
+             class="w-100 d-flex justify-content-center mt-4 mb-4">
+            <button :disabled="loading"
+                    class="btn btn-primary"
+                    @click="loadMoreRecipes">
+                Charger plus de resultats
+            </button>
+        </div>
     </div>
 </template>
 
@@ -54,6 +70,11 @@
             goToRecipe(recipe) {
                 console.log('goToRecipe', recipe);
             },
+            loadMoreRecipes() {
+                this.page += 1;
+                this.getData();
+            },
+
             getData() {
                 if (this.query === '' || this.query.length < 3) {
                     return;

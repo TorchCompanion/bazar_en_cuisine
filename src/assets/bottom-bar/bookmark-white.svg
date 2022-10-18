@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.81 29.81">
+    <defs>
+        <style>.b,.c{fill:none;}.c{stroke:#1d1d1b;stroke-miterlimit:10;stroke-width:2.13px;}</style>
+    </defs>
+    <rect class="b" width="29.81" height="29.81"/>
+    <path class="c"
+          d="M5.47,26.11V3.94c.02-.15,.09-.52,.39-.85,.42-.47,.97-.52,1.1-.53,8.63-.09,14.94-.09,15.99,0,.3,.03,.73,.1,1.04,.42,.32,.34,.36,.81,.35,1.17V26.11l-9.28-3.31c-3.2,1.1-6.4,2.2-9.59,3.31h0Z"/>
+</svg>

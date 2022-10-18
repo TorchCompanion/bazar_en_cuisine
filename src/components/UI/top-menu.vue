@@ -1,5 +1,5 @@
 <template>
-    <nav class="nav navbar fixed-top bg-light">
+    <nav class="nav navbar fixed-top top-bar">
         <div class="container-fluid d-flex justify-content-end align-content-end">
             <a class="nav-link" href="#" @click.prevent="startSearch">🔎</a>
             <a class="nav-link disabled">➕</a>

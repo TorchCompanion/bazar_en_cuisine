@@ -1,0 +1,36 @@
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 65px;
+  background-color: $background;
+  border-top: 2px solid $background-card;
+  z-index: 1050;
+
+  a.btn {
+    min-width: 80px;
+    transition: opacity 220ms ease-in-out;
+    border: none !important;
+
+    &:not(.active-bar) {
+      opacity: 0.5;
+    }
+  }
+
+  .img-bottom-bar {
+    width: 28px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .label-bottom-bar {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    display: block;
+    margin: 0 auto;
+    color: $text-color;
+    padding-top: 5px;
+  }
+}

@@ -1,7 +1,7 @@
 @import "./includes/styles";
 @import '~bootstrap/scss/bootstrap';
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Nunito+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Nunito+Sans:wght@400;600;700;800&display=swap');
 
 
 $primary: #42b983;
@@ -23,6 +23,8 @@ body {
 
   .card {
     background-color: $background-card;
+    border: none;
+    padding: .7rem 1.5rem;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -35,7 +37,8 @@ body {
 }
 
 .main-container {
-  margin-top: 66px;
+  margin-top: 70px;
+  margin-bottom: 70px;
 }
 
 div.sepatron {
@@ -44,3 +47,5 @@ div.sepatron {
 
 @import './components/recipe';
 @import './components/search';
+@import './components/top-bar';
+@import './components/bottom-bar';
