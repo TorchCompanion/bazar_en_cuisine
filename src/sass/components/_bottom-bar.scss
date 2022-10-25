@@ -13,7 +13,12 @@
     transition: opacity 220ms ease-in-out;
     border: none !important;
 
-    &:not(.active-bar) {
+    img, span.label-bottom-bar {
+      transition: opacity 220ms ease-in-out;
+    }
+
+    &:not(.active-bar) img,
+    &:not(.active-bar) span.label-bottom-bar {
       opacity: 0.5;
     }
   }
@@ -32,5 +37,19 @@
     margin: 0 auto;
     color: $text-color;
     padding-top: 5px;
+  }
+
+  .bottom-bar-pill {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    opacity: 1 !important;
+    width: 20px;
+    height: 20px;
+    font-size: .7rem;
+    padding-top: 0.1rem;
+    border-radius: 50%;
+    color: $background-card;
+    background-color: $primary;
   }
 }

@@ -83,6 +83,9 @@
                             this.recipesList = response.data.feed;
                         } else {
                             // [ATTENTION] => do not check for duplicate
+                            // why use "..." syntax
+                            // [1,2,3,4].push([0,5,6]) => [1,2,3,4,[0,5,6]]
+                            // [1,2,3,4].push(...[0,5,6]) => [1,2,3,4,0,5,6]
                             this.recipesList.push(
                                 ...response.data.feed
                             );

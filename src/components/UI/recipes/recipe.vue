@@ -11,7 +11,10 @@
             <div class="row details d-flex align-content-center">
                 <div class="col-6">
                     <h5>{{ recipe.content.details.name }}</h5>
-                    <div class="review">⭐ {{ recipe.content.details.rating }}</div>
+                    <div class="review">
+                        ⭐ {{ avrgRating }}&nbsp;
+                        <span class="small text-muted">({{ recipe.content.reviews.totalReviewCount }})</span>
+                    </div>
                 </div>
                 <div class="col-6">
                     <p class="text-muted">by {{ recipe.display.source.sourceDisplayName }}</p>
@@ -36,7 +39,15 @@
             }
         },
         watch: {},
-        computed: {},
+        computed: {
+            avrgRating() {
+                if (this.recipe.content.reviews.averageRating !== undefined
+                    && this.recipe.content.reviews.averageRating !== null) {
+                    return this.recipe.content.reviews.averageRating.toFixed(1);
+                }
+                return '-';
+            }
+        },
         created() {
 
         },
