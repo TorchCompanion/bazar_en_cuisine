@@ -57,8 +57,6 @@
 
         <!-- / routerView -->
         <!-- app-bar -->
-        <!-- TODO CREATE BOTTOM BAR
-        TODO : @see ./src/components/UI/bottom-bar.vue -->
         <bottom-bar></bottom-bar>
     </div>
 </template>
