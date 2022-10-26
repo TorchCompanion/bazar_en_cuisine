@@ -38,9 +38,52 @@ export default createStore({
             return state.activeView;
         },
         getAllIngredients: (state) => {
-            console.log('getAllIngredients', state.recipes);
-            // todo => do
-        }
+            let elementId = {}; // <= list
+            state.recipes.forEach((recipe) => {
+                if (recipe?.content?.ingredientLines !== undefined) {
+                    recipe.content.ingredientLines.forEach((ingLine) => {
+                        if (elementId[ingLine.ingredientId] === undefined) {
+                            elementId[ingLine.ingredientId] = [];
+                            elementId[ingLine.ingredientId].push(ingLine);
+                        } else {
+                            elementId[ingLine.ingredientId].push(ingLine);
+                        }
+                    });
+                }
+            });
+            let listRow = {};
+            for (const i_ in elementId) {
+                let ingredientRow = elementId[i_];
+                listRow[i_] = {
+                    units: {},
+                    display: [],
+                    name: ingredientRow[0].ingredient || 'undefined',
+                    src: ingredientRow,
+                };
+                ingredientRow.forEach((ing_) => {
+                    let unit = '';
+                    if (ing_.unit !== undefined && ing_.unit !== '') {
+                        unit = ing_.unit;
+                    }
+                    if (listRow[i_].units[unit] === undefined) {
+                        listRow[i_].units[unit] = ing_.quantity || 1;
+                    } else {
+                        listRow[i_].units[unit] += ing_.quantity || 1;
+                    }
+                });
+                for (const unit_ in listRow[i_].units) {
+                    listRow[i_].display.push({
+                        quantity: listRow[i_].units[unit_],
+                        label: unit_,
+                    });
+                }
+            }
+            let output = [];
+            for (const id_ in listRow) {
+                output.push(listRow[id_]);
+            }
+            return output;
+        },
     },
     // change variables values
     mutations: {
