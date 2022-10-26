@@ -55,6 +55,7 @@ export default createStore({
             for (const i_ in elementId) {
                 let ingredientRow = elementId[i_];
                 listRow[i_] = {
+                    id: i_,
                     units: {},
                     display: [],
                     name: ingredientRow[0].ingredient || 'undefined',
