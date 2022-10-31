@@ -54,6 +54,12 @@
             <recipes-listing @recipe-click="showRecipe"></recipes-listing>
             <!-- / listing de recipes -->
         </div>
+        <div v-show="activeView === 2" class="container-fluid">
+            <h1>Grocery 🍎</h1>
+            <!-- listing d'ingredients -->
+            <groceries></groceries>
+            <!-- / listing d'ingredients -->
+        </div>
 
         <!-- / routerView -->
         <!-- app-bar -->
@@ -68,6 +74,7 @@
     import BottomBar from "@/components/UI/bottom-bar";
     import RecipeOverlay from "@/components/UI/recipes/recipe-overlay";
     import RecipesSavedListing from "@/components/UI/recipes/recipes-saved-listing";
+    import Groceries from "@/components/UI/recipes/groceries";
 
 
     const user_ = {
@@ -84,6 +91,7 @@
     export default {
         name: 'App',
         components: {
+            Groceries,
             RecipesSavedListing,
             RecipeOverlay,
             SearchListing,

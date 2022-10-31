@@ -2,9 +2,9 @@ import {createStore} from 'vuex';
 
 
 let storedRecipesJson = localStorage.getItem('recipes') || '[]';
+let storedBoughtItemsJson = localStorage.getItem('boughtIngredients') || '[]';
 let storedRecipes = JSON.parse(storedRecipesJson);
-console.log('storedRecipes', storedRecipes);
-
+let storedBoughtItems = JSON.parse(storedBoughtItemsJson);
 
 export default createStore({
     // store variables
@@ -12,21 +12,26 @@ export default createStore({
         user: undefined,
         recipes: storedRecipes,
         activeView: 0,
+        boughtItems: storedBoughtItems,
     },
+
     // get store variables values
     getters: {
         getUser: (state) => {
             return state.user
         },
+
         getProfilePicture: (state) => {
             if (state.user !== undefined && state.user.pp !== undefined) {
                 return state.user.pp;
             }
             return "https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg";
         },
+
         getRecipes: (state) => {
             return state.recipes;
         },
+
         getRecipesIds: (state) => {
             return state.recipes.map((recipe) => {
                 if (recipe?.content?.details?.id !== undefined) {
@@ -37,6 +42,7 @@ export default createStore({
         getActiveView: (state) => {
             return state.activeView;
         },
+
         getAllIngredients: (state) => {
             let elementId = {}; // <= list
             state.recipes.forEach((recipe) => {
@@ -85,16 +91,40 @@ export default createStore({
             }
             return output;
         },
+
+        getBoughtIngredients: (state) => {
+            return state.boughtItems;
+        },
     },
     // change variables values
     mutations: {
         update_user(state, newUser) {
             state.user = newUser
         },
+
+        add_bought_ingredient(state, newIngredient) {
+            state.boughtItems.push(newIngredient);
+            localStorage.setItem('boughtIngredients', JSON.stringify(state.boughtItems));
+        },
+
+        //remove ingredient
+        remove_bought_ingredient(state, ingredientToRemove) {
+            let i = -1;
+            for (let j = 0; j < state.boughtItems.length; j++) {
+                if (state.boughtItems[j] === ingredientToRemove) {
+                    i = j;
+                    state.boughtItems.splice(i, 1);
+                    localStorage.setItem('boughtIngredients', JSON.stringify(state.boughtItems));
+                    return;
+                }
+            }
+        },
+
         add_recipe(state, newRecipe) {
             state.recipes.push(newRecipe);
             localStorage.setItem('recipes', JSON.stringify(state.recipes));
         },
+
         remove_recipe(state, recipeToDelete) {
             let i = -1;
             for (let j = 0; j < state.recipes.length; j++) {
@@ -106,11 +136,13 @@ export default createStore({
                 }
             }
         },
+
         change_active_view(state, newViewID) {
             state.activeView = newViewID;
         }
     },
 
+    // TODO reload saved items
 
     /*
     actions: {

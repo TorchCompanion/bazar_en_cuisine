@@ -1,0 +1,7 @@
+// TODO changer le style de la card si acheté/non acheté
+.grocery-item {
+    opacity: 1;
+    &.item-ok {
+        opacity: 0.3;
+    }
+}

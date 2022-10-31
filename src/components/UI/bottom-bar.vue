@@ -21,7 +21,7 @@
                     <img alt="" class="img-bottom-bar" src="../../assets/bottom-bar/apple.svg">
                 </span>
                 <span class="label-bottom-bar">Grocery</span>
-                <div class="bottom-bar-pill">{{ countIngredients }}</div>
+                <div v-show="countIngredients > 0" class="bottom-bar-pill">{{ countIngredients }}</div>
             </a>
             <a :class="['btn d-flex flex-column', {'active-bar': widget === 3}]" href="#"
                @click.prevent="changeActiveView(3)">
@@ -56,7 +56,8 @@
                 return this.$store.getters.getAllIngredients;
             },
             countIngredients() {
-                return Object.keys(this.$store.getters.getAllIngredients).length;
+                return (Object.keys(this.$store.getters.getAllIngredients).length - this.$store.getters.getBoughtIngredients.length);
+
             },
         },
         created() {
@@ -74,6 +75,9 @@
         beforeUnmount() {
         }
     }
+
+    // TODO changer le count de la bottomBar (minus boughtItems)
+
 </script>
 
 <style scoped>

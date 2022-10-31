@@ -33,81 +33,81 @@
 </template>
 
 <script>
-    import Recipe from './recipe.vue';
-    import YumliService from "@/services/YumliService";
+import Recipe from './recipe.vue';
+import YumliService from "@/services/YumliService";
 
-    export default {
-        name: "recipes-listing",
-        props: {},
-        data() {
-            return {
-                d: null,
-                recipesList: undefined,
-                loading: false,
-                yumliService: YumliService,
-                page: 0,
-                limit: 10,
-            }
+export default {
+    name: "recipes-listing",
+    props: {},
+    data() {
+        return {
+            d: null,
+            recipesList: undefined,
+            loading: false,
+            yumliService: YumliService,
+            page: 0,
+            limit: 10,
+        }
+    },
+    watch: {},
+    computed: {},
+    created() {
+        this.loadRecipes();
+    },
+    mounted() {
+
+    },
+    methods: {
+        goToRecipe(recipe) {
+            console.log('goToRecipe', recipe);
+            this.$emit('recipe-click', recipe);
         },
-        watch: {},
-        computed: {},
-        created() {
+        loadMoreRecipes() {
+            this.page += 1;
             this.loadRecipes();
         },
-        mounted() {
+        loadRecipes() {
+            this.loading = true;
+            this.yumliService.getRecipesList(
+                'list.recipe.popular',
+                this.page,
+                this.limit
+            )
+                .then(response => {
+                    if (response.data.feed === undefined
+                        || response.data.feed === null) {
+                        throw new Error("Aucune recette trouvée");
+                    }
 
-        },
-        methods: {
-            goToRecipe(recipe) {
-                console.log('goToRecipe', recipe);
-                this.$emit('recipe-click', recipe);
-            },
-            loadMoreRecipes() {
-                this.page += 1;
-                this.loadRecipes();
-            },
-            loadRecipes() {
-                this.loading = true;
-                this.yumliService.getRecipesList(
-                    'list.recipe.popular',
-                    this.page,
-                    this.limit
-                )
-                    .then(response => {
-                        if (response.data.feed === undefined
-                            || response.data.feed === null) {
-                            throw new Error("Aucune recette trouvée");
-                        }
-
-                        if (this.recipesList === undefined) {
-                            this.recipesList = response.data.feed;
-                        } else {
-                            // [ATTENTION] => do not check for duplicate
-                            // why use "..." syntax
-                            // [1,2,3,4].push([0,5,6]) => [1,2,3,4,[0,5,6]]
-                            // [1,2,3,4].push(...[0,5,6]) => [1,2,3,4,0,5,6]
-                            this.recipesList.push(
-                                ...response.data.feed
-                            );
-                        }
-                        this.loading = false;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        if (this.page >= 1) {
-                            this.page -= 1;
-                        }
-                        this.loading = false;
-                    })
-                ;
-            }
-        },
-        components: {
-            Recipe,
-        },
-        beforeUnmount() {
+                    if (this.recipesList === undefined) {
+                        this.recipesList = response.data.feed;
+                    } else {
+                        // [ATTENTION] => do not check for duplicate
+                        // why use "..." syntax
+                        // [1,2,3,4].push([0,5,6]) => [1,2,3,4,[0,5,6]]
+                        // [1,2,3,4].push(...[0,5,6]) => [1,2,3,4,0,5,6]
+                        this.recipesList.push(
+                            ...response.data.feed
+                        );
+                    }
+                    this.loading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                    if (this.page >= 1) {
+                        this.page -= 1;
+                    }
+                    this.loading = false;
+                })
+            ;
         }
+    },
+    components: {
+        Recipe,
+    },
+    beforeUnmount() {
     }
+}
 </script>
 
 <style scoped>

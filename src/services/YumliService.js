@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiKey = '58222561d8msh75b8a9bee7db0f1p1c62d5jsn1d21abda72c0';
+const apiKey = '01b96f139amsha65ef9cafc4841dp13a5fejsn9db0bc59d6fd';
 const apiHost = 'yummly2.p.rapidapi.com';
 
 const http = axios.create({
